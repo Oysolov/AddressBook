@@ -2,6 +2,7 @@ const addressBookUrl = 'http://addressbook-api.herokuapp.com/contacts';
 const table = document.getElementById('addressBookTable');
 const loadDataBtn = document.querySelector('.load-data-btn');
 loadDataBtn.addEventListener('click', fetchAddressBookRecords);
+const recordsPerPage = 4;
 initAddressBookTable();
 
 function fetchAddressBookRecords() {
@@ -12,9 +13,14 @@ function fetchAddressBookRecords() {
         .then(data => {
             resetTbody();
             var contacts = data.contacts;
-            contacts.forEach(element => {
+
+            for(var i = 0, k = i + recordsPerPage; i < k; i++) {
+                addRecordToAddressBook(contacts[i]);
+            }
+            /*contacts.forEach(element => {
                 addRecordToAddressBook(element);
-            });
+            });*/
+            createPagination(contacts.length);
         })
         .catch(error => {
             console.error(error);
@@ -31,7 +37,7 @@ function initAddressBookTable() {
 
     var tbody = createTbody();
     append(table, tbody);
-    for(var i = 0; i < 4; i++) {
+    for(var i = 0; i < recordsPerPage; i++) {
         addRecordToAddressBook(defaultRecord);
     }
 }
@@ -74,4 +80,83 @@ function resetTbody() {
     var oldTbody = document.querySelector('.tbody');
     var newTbody = createTbody();
     table.replaceChild(newTbody, oldTbody);
+}
+
+
+
+
+
+/////////////Pagination
+
+
+
+function changePage(page) {
+    removePagination()
+    fetchAddressBookRecords();
+
+}
+
+function createPagination(itemsAmount) {
+    var pagesNumber = Math.ceil(itemsAmount/recordsPerPage);
+
+    let ul = createNode('ul');
+    ul.setAttribute('id', 'pagination-ul');
+
+    append(ul, createNextPageElement());
+    for(var i = 1; i <= pagesNumber; i++) {
+        append(ul, createPageElement(i));
+    }
+    append(ul, createPreviousPageElement());
+
+    let paginationDiv = document.getElementById('pagination');
+    append(paginationDiv, ul);
+}
+
+//Care if removing without existing
+function removePagination() {
+    let paginationDiv = document.getElementById('pagination');
+    let paginationUl = document.getElementById('pagination-ul');
+    paginationDiv.removeChild(paginationUl);
+}
+
+
+//Can merge them in one function?
+function createPreviousPageElement() {
+    let li = createNode('li');
+    li.classList.add('page-item');
+    li.classList.add('previous');
+    li.classList.add('no');
+
+    let a = createNode('a');
+    a.onclick = function() {  changePage() };
+    a.textContent = 'Previous';
+
+    append(li, a);
+    return li;
+}
+
+function createNextPageElement() {
+    let li = createNode('li');
+    li.classList.add('page-item');
+    li.classList.add('next');
+    li.classList.add('no');
+
+    let a = createNode('a');
+    a.onclick = function() {  changePage() };
+    a.textContent = 'Next';
+
+    append(li,a);
+    return li;
+}
+
+function createPageElement(pageNumber) {
+    let li = createNode('li');
+    li.classList.add('page-item');
+
+    let a = createNode('a');
+    a.onclick = function() {  changePage() };
+    a.textContent = pageNumber;
+
+    append(li, a);
+    return li;
 }
