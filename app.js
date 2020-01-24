@@ -1,9 +1,6 @@
 const addressBookUrl = 'http://addressbook-api.herokuapp.com/contacts';
 const table = document.getElementById('addressBookTable');
-const loadDataBtn = document.querySelector('.load-data-btn');
-loadDataBtn.addEventListener('click', fetchAddressBookRecords);
-const recordsPerPage = 4;
-initAddressBookTable();
+fetchAddressBookRecords();
 
 function fetchAddressBookRecords() {
     fetch(addressBookUrl)
@@ -11,7 +8,7 @@ function fetchAddressBookRecords() {
             return response.json();
         })
         .then(data => {
-            resetTbody();
+            manageTbody();
             var contacts = data.contacts;
 
             for(var i = 0, k = i + recordsPerPage; i < k; i++) {
@@ -25,21 +22,6 @@ function fetchAddressBookRecords() {
         .catch(error => {
             console.error(error);
         })
-}
-
-function initAddressBookTable() {
-    var defaultProfilePicture = 'default_profile_picture.jpg';
-    let defaultRecord = {
-        avatar: defaultProfilePicture,
-        first: '',
-        last: ''
-    }
-
-    var tbody = createTbody();
-    append(table, tbody);
-    for(var i = 0; i < recordsPerPage; i++) {
-        addRecordToAddressBook(defaultRecord);
-    }
 }
 
 function addRecordToAddressBook(record) {
@@ -76,10 +58,14 @@ function append(parent, element) {
     return parent.appendChild(element);
 }
 
-function resetTbody() {
+function manageTbody() {
     var oldTbody = document.querySelector('.tbody');
     var newTbody = createTbody();
-    table.replaceChild(newTbody, oldTbody);
+    if(oldTbody !== null) {
+        table.replaceChild(newTbody, oldTbody);
+    } else {
+        append(table, newTbody);
+    }
 }
 
 
