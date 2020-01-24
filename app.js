@@ -1,27 +1,31 @@
 const addressBookUrl = 'http://addressbook-api.herokuapp.com/contacts';
 const table = document.getElementById('addressBookTable');
-fetchAddressBookRecords();
+const recordsPerPage = 4;
+var currentPage = 1;
+changePage(currentPage);
+
+function loadData(currentPage) {
+    var contactsPromise = fetchAddressBookRecords();
+    return contactsPromise.then(contacts => {
+        var firstRecordOfCurrentPage = (currentPage - 1) * recordsPerPage;
+        for(var i = firstRecordOfCurrentPage, k = i + recordsPerPage; i < k; i++) {
+            if(contacts[i] !== undefined) addRecordToAddressBook(contacts[i]);            
+        }
+        return contacts;
+    });
+}
 
 function fetchAddressBookRecords() {
-    fetch(addressBookUrl)
+    return fetch(addressBookUrl)
         .then(response => {
             return response.json();
         })
         .then(data => {
-            manageTbody();
-            var contacts = data.contacts;
-
-            for(var i = 0, k = i + recordsPerPage; i < k; i++) {
-                addRecordToAddressBook(contacts[i]);
-            }
-            /*contacts.forEach(element => {
-                addRecordToAddressBook(element);
-            });*/
-            createPagination(contacts.length);
+            return data.contacts;
         })
         .catch(error => {
             console.error(error);
-        })
+        });
 }
 
 function addRecordToAddressBook(record) {
@@ -31,7 +35,6 @@ function addRecordToAddressBook(record) {
         td2 = createNode('td'),
         td3 = createNode('td'),
         img = createNode('img');
-
     img.src = record.avatar;
     img.classList.add('avatar');
     td2.textContent = record.first;
@@ -44,18 +47,24 @@ function addRecordToAddressBook(record) {
     append(tbody, tr)
 }
 
-function createTbody() {
-    var tbody = createNode('tbody');
-    tbody.classList.add('tbody');
-    return tbody;
-}
-
 function createNode(element) {
     return document.createElement(element);
 }
 
 function append(parent, element) {
     return parent.appendChild(element);
+}
+
+
+
+function changePage(newPage) {
+    currentPage = newPage;
+    manageTbody();
+    removePagination()
+    var contactsPromise = loadData(newPage);
+    contactsPromise.then(contacts => {
+        createPagination(contacts.length);
+    })
 }
 
 function manageTbody() {
@@ -68,18 +77,16 @@ function manageTbody() {
     }
 }
 
+function createTbody() {
+    var tbody = createNode('tbody');
+    tbody.classList.add('tbody');
+    return tbody;
+}
 
-
-
-
-/////////////Pagination
-
-
-
-function changePage(page) {
-    removePagination()
-    fetchAddressBookRecords();
-
+function removePagination() {
+    let paginationDiv = document.getElementById('pagination');
+    let paginationUl = document.getElementById('pagination-ul');
+    if(paginationUl !== null) paginationDiv.removeChild(paginationUl);
 }
 
 function createPagination(itemsAmount) {
@@ -88,23 +95,16 @@ function createPagination(itemsAmount) {
     let ul = createNode('ul');
     ul.setAttribute('id', 'pagination-ul');
 
-    append(ul, createNextPageElement());
+    if(currentPage !== 1) append(ul, createPreviousPageElement());
     for(var i = 1; i <= pagesNumber; i++) {
         append(ul, createPageElement(i));
     }
-    append(ul, createPreviousPageElement());
 
+    if(currentPage !== pagesNumber) append(ul, createNextPageElement());
+    
     let paginationDiv = document.getElementById('pagination');
     append(paginationDiv, ul);
 }
-
-//Care if removing without existing
-function removePagination() {
-    let paginationDiv = document.getElementById('pagination');
-    let paginationUl = document.getElementById('pagination-ul');
-    paginationDiv.removeChild(paginationUl);
-}
-
 
 //Can merge them in one function?
 function createPreviousPageElement() {
@@ -114,8 +114,8 @@ function createPreviousPageElement() {
     li.classList.add('no');
 
     let a = createNode('a');
-    a.onclick = function() {  changePage() };
-    a.textContent = 'Previous';
+    a.onclick = function() {  changePage(currentPage - 1) };
+    a.textContent = '<';
 
     append(li, a);
     return li;
@@ -128,8 +128,8 @@ function createNextPageElement() {
     li.classList.add('no');
 
     let a = createNode('a');
-    a.onclick = function() {  changePage() };
-    a.textContent = 'Next';
+    a.onclick = function() {  changePage(currentPage + 1) };
+    a.textContent = '>';
 
     append(li,a);
     return li;
@@ -138,9 +138,11 @@ function createNextPageElement() {
 function createPageElement(pageNumber) {
     let li = createNode('li');
     li.classList.add('page-item');
-
+    if(pageNumber === currentPage) li.classList.add('active');
+    
     let a = createNode('a');
-    a.onclick = function() {  changePage() };
+    a.onclick = function() {  changePage(pageNumber) };
+    
     a.textContent = pageNumber;
 
     append(li, a);

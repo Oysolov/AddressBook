@@ -13,7 +13,7 @@ body {
 
 .header {
     height: 8%;
-    background-color: #6f7070;
+    background-color: #444B6E;
 }
 
 .logo {
@@ -66,13 +66,6 @@ tr:hover {
 
 
 
-
-
-
-
-
-
-
 a:hover {
     cursor: pointer;
 }
@@ -98,14 +91,14 @@ li {
 
 
 li.active a {
-    background-color: #444B6E;
+    background-color: orange;
 }
 li:first-child a {
     border-radius: 5px 0 0 5px;
 }
 li:last-child a {
     border-radius: 0 5px 5px 0;
-    border-right: 2px solid #3D315B;
+    border-right: 2px solid #6f7070;
 }
 
 a {
