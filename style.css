@@ -1,64 +1,177 @@
-body {
-    background-image: url("background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 .container {
-    height: 93vh;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-top: 2%;
+    margin: 2% 3%;
 }
 
 .header {
-    height: 8%;
-    background-color: #6f7070;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #444B6E;
+    padding: 8px 15px;
 }
 
 .logo {
-    width: 50px;
-    height: 50px;
-    margin-top: 1%;
-    margin-left: 2%;
+    width: 30px;
+    height: 30px;
 }
 
 .title {
-    display: inline-block;
-    margin-left: 1%;
-    font-size: 50px;
+    margin-left: 2%;
+    font-size: 42px;
     color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-table, th, td {
-    border: 1px solid black;
-} 
+#addressBookTable {
+    border-collapse: collapse;
+    font-size: 20px;
+    text-align: left;
+    width: 100%;
+}
+
+#addressBookTable th, #addressBookTable td {
+    border: 1px solid #61616185;
+    padding: 10px;
+}
+
+.th-avatar {
+    width: 72px;
+}
 
 tr:hover {
     background-color: #dbd8d885;
 }
 
-.th-avatar {
-    width: 17%;
-}
-
-.th-name {
-    width: 45%;
-}
-
-#addressBookTable {
-    background-color: white;
-    border-collapse: collapse;
-    font-size: 35px;
-    text-align: left;
-    width: 100%;
+#tbody {
+    min-height: 372px;
 }
 
 .avatar {
-    width: 150px;
-    height: 150px;
+    width: 72px;
+    height: 72px;
     vertical-align: bottom;
-    border-radius: 250px;
+    border-radius: 50px;
 }
 
+#pagination {
+    display: flex;
+    justify-content: center;
+    border: 1px solid #61616185;
+    border-top-width: 0px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+}
+
+#pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+#pagination li {
+    color: #fff;
+    display: flex;
+}
+
+#pagination li button {
+    color: white;
+}
+
+#pagination li.active button {
+    background-color: orange;
+}
+
+#pagination li:first-child button {
+    border-radius: 5px 0 0 5px;
+}
+
+#pagination li:last-child button {
+    border-radius: 0 5px 5px 0;
+    border-right: 2px solid #6f7070;
+}
+
+#pagination button {
+    background-color: #444B6E;
+    padding: 5px 10px;
+    border: 2px solid #3D315B;
+    border-right: 0;
+    font-size: 20px;
+}
+
+#pagination button:hover {
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) {
+
+    .container {
+        margin: 2% 7%;
+    }
+
+    .header {
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 44px;
+    }
+    
+    #addressBookTable {
+        font-size: 25px;
+    }
+
+    .th-avatar {
+        width: 72px;
+    }
+
+    #tbody {
+        min-height: 484px;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+    
+    #pagination button {
+        font-size: 25px;
+    }
+
+}
+
+@media only screen and (min-width: 1000px) {
+
+    .container {
+        margin: 2% 30%;
+    }
+    
+    .header {
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 45px;
+    }
+    
+    #addressBookTable {
+        font-size: 30px;
+    }
+    
+    .th-avatar {
+        width: 72px;
+    }
+    
+    #tbody {
+        min-height: 484px;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+    
+    #pagination button {
+        font-size: 25px;
+    }
+
+}
