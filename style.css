@@ -25,7 +25,7 @@
     border-collapse: collapse;
     font-size: 20px;
     text-align: left;
-    min-height: 75vh; /*55.1vh*/
+    min-height: 55vh;
     width: 100%;
 }
 
@@ -116,7 +116,7 @@
     }
     
     #pagination a {
-        font-size: 30px;
+        font-size: 25px;
     }
 
 }
@@ -137,7 +137,6 @@
     
     #addressBookTable {
         font-size: 30px;
-        min-height: 75vh;
     }
     
     .th-avatar {
@@ -154,7 +153,7 @@
     }
     
     #pagination a {
-        font-size: 28px;
+        font-size: 25px;
     }
 
     #pagination a:hover {
