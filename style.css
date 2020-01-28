@@ -40,10 +40,6 @@ tr:hover {
     background-color: #dbd8d885;
 }
 
-#tbody {
-    min-height: 372px;
-}
-
 .avatar {
     width: 72px;
     height: 72px;
@@ -121,11 +117,7 @@ tr:hover {
     }
 
     .th-avatar {
-        width: 72px;
-    }
-
-    #tbody {
-        min-height: 484px;
+        width: 100px;
     }
 
     .avatar {
@@ -158,13 +150,9 @@ tr:hover {
     }
     
     .th-avatar {
-        width: 72px;
+        width: 100px;
     }
     
-    #tbody {
-        min-height: 484px;
-    }
-
     .avatar {
         width: 100px;
         height: 100px;
