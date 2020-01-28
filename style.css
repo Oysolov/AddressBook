@@ -15,7 +15,6 @@
 }
 
 .title {
-    display: inline-block;
     margin-left: 2%;
     font-size: 42px;
     color: white;
@@ -25,7 +24,6 @@
     border-collapse: collapse;
     font-size: 20px;
     text-align: left;
-    /*min-height: 55vh;*/
     width: 100%;
 }
 
@@ -40,6 +38,10 @@
 
 tr:hover {
     background-color: #dbd8d885;
+}
+
+#tbody {
+    min-height: 372px;
 }
 
 .avatar {
@@ -71,20 +73,24 @@ tr:hover {
     display: flex;
 }
 
-#pagination li.active a {
+#pagination li button {
+    color: white;
+}
+
+#pagination li.active button {
     background-color: orange;
 }
 
-#pagination li:first-child a {
+#pagination li:first-child button {
     border-radius: 5px 0 0 5px;
 }
 
-#pagination li:last-child a {
+#pagination li:last-child button {
     border-radius: 0 5px 5px 0;
     border-right: 2px solid #6f7070;
 }
 
-#pagination a {
+#pagination button {
     background-color: #444B6E;
     padding: 5px 10px;
     border: 2px solid #3D315B;
@@ -92,7 +98,7 @@ tr:hover {
     font-size: 20px;
 }
 
-#pagination a:hover {
+#pagination button:hover {
     cursor: pointer;
 }
 
@@ -118,12 +124,16 @@ tr:hover {
         width: 72px;
     }
 
+    #tbody {
+        min-height: 484px;
+    }
+
     .avatar {
         width: 100px;
         height: 100px;
     }
     
-    #pagination a {
+    #pagination button {
         font-size: 25px;
     }
 
@@ -151,12 +161,16 @@ tr:hover {
         width: 72px;
     }
     
+    #tbody {
+        min-height: 484px;
+    }
+
     .avatar {
         width: 100px;
         height: 100px;
     }
     
-    #pagination a {
+    #pagination button {
         font-size: 25px;
     }
 

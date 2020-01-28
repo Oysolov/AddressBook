@@ -2,17 +2,17 @@ const addressBookUrl = 'http://addressbook-api.herokuapp.com/contacts';
 const table = document.getElementById('addressBookTable');
 const recordsPerPage = 4;
 let currentPage = 1;
-let contactsPromise = fetchAddressBookRecords();
+let contacts = [];
+fetchAddressBookRecords();
 
 function fetchAddressBookRecords() {
-    return fetch(addressBookUrl)
+    fetch(addressBookUrl)
         .then(response => {
             return response.json();
         })
         .then(data => {
-            let contacts = data.contacts;
+            contacts = data.contacts;
             loadPage(currentPage);
-            return contacts;
         })
         .catch(error => {
             console.error(error);
@@ -25,26 +25,18 @@ function loadPage(newPage) {
     removePagination();
     manageTbody();
     fillTable(newPage);
-    contactsPromise.then(contacts => {
-        createPagination(contacts.length);
-    });
-    
+    createPagination(contacts.length);
 }
 
 function fillTable(currentPage) {
-    contactsPromise.then(contacts => {
-        let firstRecordOfCurrentPage = (currentPage - 1) * recordsPerPage;
-        for(let i = firstRecordOfCurrentPage, k = i + recordsPerPage; i < k; i++) {
-            if(contacts[i]) {
-                addRecordToAddressBook(contacts[i]);
-            }
-        }
-    });
+    const firstRecordOfCurrentPage = (currentPage - 1) * recordsPerPage;
+    contacts.slice(firstRecordOfCurrentPage, firstRecordOfCurrentPage + recordsPerPage)
+        .forEach(addRecordToAddressBook);
 }
 
 function addRecordToAddressBook(record) {
-    let tbody = document.getElementById('tbody');
-    let tr = createNode('tr'),
+    const tbody = document.getElementById('tbody');
+    const tr = createNode('tr'),
         td1 = createNode('td'),
         td2 = createNode('td'),
         td3 = createNode('td'),
@@ -66,21 +58,20 @@ function createNode(element) {
 }
 
 function append(parent, element) {
-    return parent.appendChild(element);
+    parent.appendChild(element);
 }
 
 function removePagination() {
-    let paginationDiv = document.getElementById('pagination');
-    let paginationUl = document.getElementById('pagination-ul');
+    const paginationDiv = document.getElementById('pagination');
+    const paginationUl = document.getElementById('pagination-ul');
     if(paginationUl) {
         paginationDiv.removeChild(paginationUl);
     }
 }
 
-
 function manageTbody() {
-    let oldTbody = document.getElementById('tbody');
-    let newTbody = createTbody();
+    const oldTbody = document.getElementById('tbody');
+    const newTbody = createTbody();
     if(oldTbody) {
         table.replaceChild(newTbody, oldTbody);
     } else {
@@ -89,15 +80,15 @@ function manageTbody() {
 }
 
 function createTbody() {
-    let tbody = createNode('tbody');
+    const tbody = createNode('tbody');
     tbody.setAttribute('id', 'tbody');
     return tbody;
 }
 
 function createPagination(itemsAmount) {
-    let pagesNumber = Math.ceil(itemsAmount/recordsPerPage);
+    const pagesNumber = Math.ceil(itemsAmount/recordsPerPage);
 
-    let ul = createNode('ul');
+    const ul = createNode('ul');
     ul.setAttribute('id', 'pagination-ul');
 
     if(currentPage !== 1) { 
@@ -112,40 +103,46 @@ function createPagination(itemsAmount) {
         append(ul, createArrowPageElement('next'));
     }
     
-    let paginationDiv = document.getElementById('pagination');
+    const paginationDiv = document.getElementById('pagination');
     append(paginationDiv, ul);
 }
 
 function createArrowPageElement(arrow) {
-    let li = createNode('li');
-    let classes = ['page-item', 'previous'];
+    const li = createNode('li');
+    const classes = ['page-item', 'previous'];
     li.classList.add(classes);
 
-    let a = createNode('a');
+    const button = createNode('button');
     if(arrow === 'previous') {
-        a.onclick = function() { loadPage(currentPage - 1) };
-        a.textContent = '<';
+        button.addEventListener('click', function() { 
+            loadPage(currentPage - 1);
+        });
+        button.textContent = '<';
     } else if (arrow === 'next') {
-        a.onclick = function() { loadPage(currentPage + 1) };
-        a.textContent = '>';
+        button.addEventListener('click', function() {
+            loadPage(currentPage + 1);
+        })
+        button.textContent = '>';
     }
     
-    append(li, a);
+    append(li, button);
     return li;
 }
 
 function createNumberPageElement(pageNumber) {
-    let li = createNode('li');
+    const li = createNode('li');
     li.classList.add('page-item');
     if(pageNumber === currentPage) {
         li.classList.add('active');
     }
 
-    let a = createNode('a');
-    a.onclick = function() {  loadPage(pageNumber) };
+    const button = createNode('button');
+    button.addEventListener('click', function() {
+        loadPage(pageNumber);
+    })
     
-    a.textContent = pageNumber;
+    button.textContent = pageNumber;
 
-    append(li, a);
+    append(li, button);
     return li;
 }
