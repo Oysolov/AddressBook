@@ -1,109 +1,100 @@
-body {
-    background-image: url("background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 .container {
-    height: 93vh;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-top: 2%;
+    margin: 5% 3%; /*left and right 30%, top 2%*/
 }
 
 .header {
-    height: 8%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     background-color: #444B6E;
+    padding: 10px 15px; /*padding: 15px*/
 }
 
 .logo {
-    width: 50px;
-    height: 50px;
-    margin-top: 1%;
-    margin-left: 2%;
+    width: 30px;
+    height: 30px;
 }
 
 .title {
     display: inline-block;
-    margin-left: 1%;
-    font-size: 50px;
+    margin-left: 2%;
+    font-size: 40px; /*45px*/
     color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-table, th, td {
-    border: 1px solid black;
-} 
+#addressBookTable {
+    border-collapse: collapse;
+    font-size: 20px; /*30px */
+    text-align: left;
+    min-height: 75vh; /*55.1vh*/
+    width: 100%;
 
+}
+
+#addressBookTable th, #addressBookTable td {
+    border: 1px solid #61616185;
+    padding: 10px;
+}
+
+.th-name {
+    width: 36%;
+}
+
+/* move to desktop */
 tr:hover {
     background-color: #dbd8d885;
 }
 
-.th-avatar {
-    width: 17%;
-}
-
-.th-name {
-    width: 45%;
-}
-
-#addressBookTable {
-    background-color: white;
-    border-collapse: collapse;
-    font-size: 35px;
-    text-align: left;
-    width: 100%;
-}
-
 .avatar {
-    width: 150px;
-    height: 150px;
+    width: 72px; /*100px*/
+    height: 72px; /*100px*/
     vertical-align: bottom;
-    border-radius: 250px;
+    border-radius: 50px;
 }
 
-
-
-
-
+/* move to desktop */
 a:hover {
     cursor: pointer;
 }
 
 #pagination {
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-direction: column;
+    border: 1px solid #61616185;
+    border-top-width: 0px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
 }
 
-ul {
+#pagination ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
 }
 
-li {
+#pagination li {
     color: #fff;
     display: flex;
 }
 
-
-li.active a {
+#pagination li.active a {
     background-color: orange;
 }
-li:first-child a {
+
+#pagination li:first-child a {
     border-radius: 5px 0 0 5px;
 }
-li:last-child a {
+
+#pagination li:last-child a {
     border-radius: 0 5px 5px 0;
     border-right: 2px solid #6f7070;
 }
 
-a {
+#pagination a {
     background-color: #444B6E;
     padding: 5px 10px;
     border: 2px solid #3D315B;
     border-right: 0;
+    font-size: 20px;
 }

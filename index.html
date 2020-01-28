@@ -2,32 +2,30 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="style.css">
         <title>Address Book</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
 
     <body>
 
         <div class="container">
             <div class="header">
-                <img src="logo.png" class="logo">
+                <img class="logo" src="logo.png" alt="Address book logo">
                 <div class="title">Address book</div>
             </div>
             
             <table id="addressBookTable">
-                <thead><tr>
-                    <th class="th-avatar">Picture</th>
-                    <th class="th-name">First Name</th>
-                    <th class="th-name">Last Name</th>
-                </tr></thead>
-                <tfoot>
+                <thead>
                     <tr>
-                      <td colspan="3">
-                        <div id="pagination"></div>
-                      </td>
+                        <th class="th-avatar">Picture</th>
+                        <th class="th-name">First Name</th>
+                        <th class="th-name">Last Name</th>
                     </tr>
-                </tfoot>
+                </thead>
             </table>
+
+            <div id="pagination"></div>
         </div>
 
     </body>

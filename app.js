@@ -1,19 +1,8 @@
 const addressBookUrl = 'http://addressbook-api.herokuapp.com/contacts';
 const table = document.getElementById('addressBookTable');
 const recordsPerPage = 4;
-var currentPage = 1;
-changePage(currentPage);
-
-function loadData(currentPage) {
-    var contactsPromise = fetchAddressBookRecords();
-    return contactsPromise.then(contacts => {
-        var firstRecordOfCurrentPage = (currentPage - 1) * recordsPerPage;
-        for(var i = firstRecordOfCurrentPage, k = i + recordsPerPage; i < k; i++) {
-            if(contacts[i] !== undefined) addRecordToAddressBook(contacts[i]);            
-        }
-        return contacts;
-    });
-}
+let currentPage = 1;
+let contactsPromise = fetchAddressBookRecords();
 
 function fetchAddressBookRecords() {
     return fetch(addressBookUrl)
@@ -21,15 +10,40 @@ function fetchAddressBookRecords() {
             return response.json();
         })
         .then(data => {
-            return data.contacts;
+            let contacts = data.contacts;
+            loadPage(currentPage);
+            return contacts;
         })
         .catch(error => {
             console.error(error);
+            //window.location.href = 'error.html';
         });
 }
 
+function loadPage(newPage) {
+    currentPage = newPage;
+    removePagination();
+    manageTbody();
+    fillTable(newPage);
+    contactsPromise.then(contacts => {
+        createPagination(contacts.length);
+    });
+    
+}
+
+function fillTable(currentPage) {
+    contactsPromise.then(contacts => {
+        let firstRecordOfCurrentPage = (currentPage - 1) * recordsPerPage;
+        for(let i = firstRecordOfCurrentPage, k = i + recordsPerPage; i < k; i++) {
+            if(contacts[i]) {
+                addRecordToAddressBook(contacts[i]);
+            }
+        }
+    });
+}
+
 function addRecordToAddressBook(record) {
-    var tbody = document.querySelector('.tbody');
+    let tbody = document.getElementById('tbody');
     let tr = createNode('tr'),
         td1 = createNode('td'),
         td2 = createNode('td'),
@@ -55,22 +69,19 @@ function append(parent, element) {
     return parent.appendChild(element);
 }
 
-
-
-function changePage(newPage) {
-    currentPage = newPage;
-    manageTbody();
-    removePagination()
-    var contactsPromise = loadData(newPage);
-    contactsPromise.then(contacts => {
-        createPagination(contacts.length);
-    })
+function removePagination() {
+    let paginationDiv = document.getElementById('pagination');
+    let paginationUl = document.getElementById('pagination-ul');
+    if(paginationUl) {
+        paginationDiv.removeChild(paginationUl);
+    }
 }
 
+
 function manageTbody() {
-    var oldTbody = document.querySelector('.tbody');
-    var newTbody = createTbody();
-    if(oldTbody !== null) {
+    let oldTbody = document.getElementById('tbody');
+    let newTbody = createTbody();
+    if(oldTbody) {
         table.replaceChild(newTbody, oldTbody);
     } else {
         append(table, newTbody);
@@ -78,70 +89,60 @@ function manageTbody() {
 }
 
 function createTbody() {
-    var tbody = createNode('tbody');
-    tbody.classList.add('tbody');
+    let tbody = createNode('tbody');
+    tbody.setAttribute('id', 'tbody');
     return tbody;
 }
 
-function removePagination() {
-    let paginationDiv = document.getElementById('pagination');
-    let paginationUl = document.getElementById('pagination-ul');
-    if(paginationUl !== null) paginationDiv.removeChild(paginationUl);
-}
-
 function createPagination(itemsAmount) {
-    var pagesNumber = Math.ceil(itemsAmount/recordsPerPage);
+    let pagesNumber = Math.ceil(itemsAmount/recordsPerPage);
 
     let ul = createNode('ul');
     ul.setAttribute('id', 'pagination-ul');
 
-    if(currentPage !== 1) append(ul, createPreviousPageElement());
-    for(var i = 1; i <= pagesNumber; i++) {
-        append(ul, createPageElement(i));
+    if(currentPage !== 1) { 
+        append(ul, createArrowPageElement('previous'));
     }
 
-    if(currentPage !== pagesNumber) append(ul, createNextPageElement());
+    for(let i = 1; i <= pagesNumber; i++) {
+        append(ul, createNumberPageElement(i));
+    }
+
+    if(currentPage !== pagesNumber) {
+        append(ul, createArrowPageElement('next'));
+    }
     
     let paginationDiv = document.getElementById('pagination');
     append(paginationDiv, ul);
 }
 
-//Can merge them in one function?
-function createPreviousPageElement() {
+function createArrowPageElement(arrow) {
     let li = createNode('li');
-    li.classList.add('page-item');
-    li.classList.add('previous');
-    li.classList.add('no');
+    let classes = ['page-item', 'previous'];
+    li.classList.add(classes);
 
     let a = createNode('a');
-    a.onclick = function() {  changePage(currentPage - 1) };
-    a.textContent = '<';
-
+    if(arrow === 'previous') {
+        a.onclick = function() { loadPage(currentPage - 1) };
+        a.textContent = '<';
+    } else if (arrow === 'next') {
+        a.onclick = function() { loadPage(currentPage + 1) };
+        a.textContent = '>';
+    }
+    
     append(li, a);
     return li;
 }
 
-function createNextPageElement() {
+function createNumberPageElement(pageNumber) {
     let li = createNode('li');
     li.classList.add('page-item');
-    li.classList.add('next');
-    li.classList.add('no');
+    if(pageNumber === currentPage) {
+        li.classList.add('active');
+    }
 
     let a = createNode('a');
-    a.onclick = function() {  changePage(currentPage + 1) };
-    a.textContent = '>';
-
-    append(li,a);
-    return li;
-}
-
-function createPageElement(pageNumber) {
-    let li = createNode('li');
-    li.classList.add('page-item');
-    if(pageNumber === currentPage) li.classList.add('active');
-    
-    let a = createNode('a');
-    a.onclick = function() {  changePage(pageNumber) };
+    a.onclick = function() {  loadPage(pageNumber) };
     
     a.textContent = pageNumber;
 
