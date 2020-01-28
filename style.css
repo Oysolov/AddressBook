@@ -1,12 +1,12 @@
 .container {
-    margin: 5% 3%; /*left and right 30%, top 2%*/
+    margin: 2% 3%;
 }
 
 .header {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: #444B6E;
-    padding: 10px 15px; /*padding: 15px*/
+    padding: 8px 15px;
 }
 
 .logo {
@@ -17,17 +17,16 @@
 .title {
     display: inline-block;
     margin-left: 2%;
-    font-size: 40px; /*45px*/
+    font-size: 42px;
     color: white;
 }
 
 #addressBookTable {
     border-collapse: collapse;
-    font-size: 20px; /*30px */
+    font-size: 20px;
     text-align: left;
     min-height: 75vh; /*55.1vh*/
     width: 100%;
-
 }
 
 #addressBookTable th, #addressBookTable td {
@@ -35,25 +34,15 @@
     padding: 10px;
 }
 
-.th-name {
-    width: 36%;
-}
-
-/* move to desktop */
-tr:hover {
-    background-color: #dbd8d885;
+.th-avatar {
+    width: 72px;
 }
 
 .avatar {
-    width: 72px; /*100px*/
-    height: 72px; /*100px*/
+    width: 72px;
+    height: 72px;
     vertical-align: bottom;
     border-radius: 50px;
-}
-
-/* move to desktop */
-a:hover {
-    cursor: pointer;
 }
 
 #pagination {
@@ -97,4 +86,79 @@ a:hover {
     border: 2px solid #3D315B;
     border-right: 0;
     font-size: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+
+    .container {
+        margin: 2% 7%;
+    }
+
+    .header {
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 44px;
+    }
+    
+    #addressBookTable {
+        font-size: 25px;
+    }
+
+    .th-avatar {
+        width: 72px;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+    
+    #pagination a {
+        font-size: 30px;
+    }
+
+}
+
+@media only screen and (min-width: 1000px) {
+
+    .container {
+        margin: 2% 30%;
+    }
+    
+    .header {
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 45px;
+    }
+    
+    #addressBookTable {
+        font-size: 30px;
+        min-height: 75vh;
+    }
+    
+    .th-avatar {
+        width: 72px;
+    }
+
+    tr:hover {
+        background-color: #dbd8d885;
+    }
+    
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+    
+    #pagination a {
+        font-size: 28px;
+    }
+
+    #pagination a:hover {
+        cursor: pointer;
+    }
+
 }
