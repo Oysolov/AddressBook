@@ -25,7 +25,26 @@
     font-size: 20px;
     text-align: left;
     width: 100%;
+    /*min-height: 55vh;*/
+    /*border: 1px solid #61616185;*/
 }
+
+table.sortable thead tr .tableHeader {
+    background-image: url('img/asc_desc.png');
+	background-repeat: no-repeat;
+    background-position: center right;
+    background-size: 20px 20px;
+    cursor: pointer;
+}
+
+table.sortable thead tr .headerSortAsc {
+	background-image: url('img/asc.png');
+}
+
+table.sortable thead tr .headerSortDesc {
+	background-image: url('img/desc.png');
+}
+
 
 #addressBookTable th, #addressBookTable td {
     border: 1px solid #61616185;
@@ -96,6 +115,24 @@ tr:hover {
 
 #pagination button:hover {
     cursor: pointer;
+}
+
+#search {
+    background-image: url('img/search_icon.png');
+    background-size: 35px 35px;
+    background-position: 4px 4px;
+    background-repeat: no-repeat;
+
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 50px;
+    border: 1px solid #61616185;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+#search:focus {
+    outline: none;
 }
 
 @media only screen and (min-width: 768px) {
