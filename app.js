@@ -163,7 +163,8 @@ function search() {
     } else {
         oneWordSearch(searchedWords);
     }
-    loadPage(1);
+
+    filteredContacts.length === 0 ? emptyTable() : loadPage(1);
 };
 
 function oneWordSearch(searchedValue) {
@@ -175,6 +176,22 @@ function twoWordsSearch(searchedWords) {
     filteredContacts = fetchedContacts.filter(contact =>
         contact.first.toLowerCase().match(searchedWords[0]) &&
         contact.last.toLowerCase().match(searchedWords[1]));
+}
+
+function emptyTable() {
+    removePagination();
+    createPagination(1);
+    manageTbody();
+    const tbody = document.getElementById('tbody');
+    const tr = createNode('tr'),
+        td = createNode('td');
+    td.setAttribute('colspan', '3');   
+    td.textContent = 'Results were not found';
+    td.classList.add('empty');
+
+
+    append(tr,td);
+    append(tbody, tr)
 }
 
 /* SORT */
@@ -199,7 +216,7 @@ function sort(event) {
         descSort(targetClassList);
     }
     search();
-    loadPage(1);
+    filteredContacts.length === 0 ? emptyTable() : loadPage(1);
 }
 
 function ascSort(targetId, targetClassList) {
@@ -236,5 +253,3 @@ function columnsInitialState() {
     if(lastNameThClassList.contains(descClassName)) lastNameThClassList.remove(descClassName);
 }
 
-//Message when no records for search
-//PNGS PLEASE
