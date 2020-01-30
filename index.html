@@ -14,17 +14,18 @@
                 <span class="title">Address book</span>
             </div>
             
-            <table id="addressBookTable">
+            <table class="sortable" id="addressBookTable">
                 <thead>
                     <tr>
                         <th class="th-avatar">Picture</th>
-                        <th class="th-name">First Name</th>
-                        <th class="th-name">Last Name</th>
+                        <th id="firstNameTh" class="tableHeader">First Name</th>
+                        <th id="lastNameTh" class="tableHeader">Last Name</th>
                     </tr>
                 </thead>
             </table>
 
             <div id="pagination"></div>
+            <input type="search" id="search" placeholder="Search for names..."/>
         </div>
     </body>
     

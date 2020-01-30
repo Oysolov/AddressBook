@@ -21,27 +21,42 @@
 }
 
 #addressBookTable {
+    width: 100%;
     border-collapse: collapse;
     font-size: 20px;
     text-align: left;
-    width: 100%;
+    /*min-height: 55vh;*/
+    /*border: 1px solid #61616185;*/
 }
+
+table.sortable thead tr .tableHeader {
+    background-image: url('img/asc_desc.png');
+	background-repeat: no-repeat;
+    background-position: center right;
+    background-size: 20px 20px;
+    cursor: pointer;
+}
+
+table.sortable thead tr .headerSortAsc {
+	background-image: url('img/asc.png');
+}
+
+table.sortable thead tr .headerSortDesc {
+	background-image: url('img/desc.png');
+}
+
 
 #addressBookTable th, #addressBookTable td {
     border: 1px solid #61616185;
-    padding: 10px;
+    padding: 8px;
 }
 
 .th-avatar {
-    width: 72px;
+    width: 72px; /*fix this*/
 }
 
 tr:hover {
     background-color: #dbd8d885;
-}
-
-#tbody {
-    min-height: 372px;
 }
 
 .avatar {
@@ -49,6 +64,12 @@ tr:hover {
     height: 72px;
     vertical-align: bottom;
     border-radius: 50px;
+}
+
+.empty {
+    height: 72px;
+    font-size: 35px;
+    text-align: center;
 }
 
 #pagination {
@@ -102,6 +123,24 @@ tr:hover {
     cursor: pointer;
 }
 
+#search {
+    background-image: url('img/search_icon.png');
+    background-size: 35px 35px;
+    background-position: 4px 4px;
+    background-repeat: no-repeat;
+
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 50px;
+    border: 1px solid #61616185;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+#search:focus {
+    outline: none;
+}
+
 @media only screen and (min-width: 768px) {
 
     .container {
@@ -121,16 +160,17 @@ tr:hover {
     }
 
     .th-avatar {
-        width: 72px;
-    }
-
-    #tbody {
-        min-height: 484px;
+        width: 100px;
     }
 
     .avatar {
         width: 100px;
         height: 100px;
+    }
+
+    .empty {
+        height: 100px;
+        font-size: 38px;
     }
     
     #pagination button {
@@ -158,18 +198,20 @@ tr:hover {
     }
     
     .th-avatar {
-        width: 72px;
+        width: 100px;
     }
     
-    #tbody {
-        min-height: 484px;
-    }
-
     .avatar {
         width: 100px;
         height: 100px;
     }
     
+    .empty {
+        height: 100px;
+        font-size: 40px;
+    }
+    
+
     #pagination button {
         font-size: 25px;
     }
